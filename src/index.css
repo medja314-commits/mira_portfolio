@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Palette : fond crème, texte brun très foncé, accent rose poudré, touches de beige. */
+@theme {
+  --color-cream: #fbf7f2;
+  --color-sand: #f4ebe1;
+  --color-beige: #e7d6c4;
+  --color-ink: #2b211d;
+  --color-muted: #6b5c54;
+  --color-rose: #e3aeb4;
+  --color-rose-soft: #f7e6e7;
+  --color-rose-deep: #a4515c;
+  --color-rose-deep-hover: #8c4049;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-rose-deep;
+  }
+
+  ::selection {
+    background: var(--color-rose);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-rose-deep px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-rose-deep-hover focus-visible:outline-rose-deep;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/25 bg-transparent px-6 py-3 text-sm font-medium text-ink transition hover:border-ink hover:bg-sand;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-beige bg-white/70 px-3 py-1 text-xs font-medium text-ink;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl;
+  }
+
+  .card {
+    @apply rounded-3xl border border-beige/80 bg-white/70 shadow-[0_1px_2px_rgba(43,33,29,0.04)];
+  }
+}
+
+/* Animation d'apparition douce, désactivée si l'utilisateur demande moins de mouvement. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
