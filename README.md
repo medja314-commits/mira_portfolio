@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Portfolio — Mira EDJA
 
 Portfolio de développeuse Web & Mobile, construit avec React, TypeScript, Vite et Tailwind CSS.
@@ -61,3 +62,6 @@ Site statique : n'importe quel hébergeur de fichiers statiques convient.
 ## Liens à compléter
 
 - LinkedIn : aucune URL n'a été fournie. Ajouter le lien dans `profile` (`src/data/portfolio.ts`) et dans `Hero.tsx` / `Contact.tsx` si besoin.
+=======
+# mira_portfolio
+>>>>>>> 0fb5e4aab58890a834d8e32b060e00fd2430b489
