@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { GraduationCap, Briefcase, Sparkles } from 'lucide-react'
 import { education, experience, otherWork, type TimelineItem } from '../data/portfolio'
 import { Reveal } from './Reveal'
@@ -6,9 +7,9 @@ import { SectionHeading } from './SectionHeading'
 function Timeline({ items }: { items: TimelineItem[] }) {
   return (
     <ol className="relative ml-2 space-y-10 border-l border-lavender pl-8">
-      {items.map((item) => (
-        <li key={`${item.period}-${item.title}`} className="relative">
-          <span aria-hidden="true" className="absolute top-1.5 -left-[2.3rem] h-3 w-3 rounded-full border-2 border-violet-deep bg-cream" />
+      {items.map((item, i) => (
+        <li key={`${item.period}-${item.title}`} className="group pop-item relative" style={{ '--i': i * 3 } as CSSProperties}>
+          <span aria-hidden="true" className="absolute top-1.5 -left-[2.3rem] h-3 w-3 rounded-full border-2 border-violet-deep bg-cream transition duration-300 group-hover:scale-150 group-hover:bg-rose" />
           <p className="text-xs font-semibold tracking-wide text-violet-deep uppercase">{item.period}</p>
           <h4 className="mt-1.5 font-display text-xl font-semibold text-ink">{item.title}</h4>
           <p className="mt-1 text-sm text-muted">
@@ -31,9 +32,9 @@ export function Journey() {
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
-          <Reveal>
-            <h3 className="flex items-center gap-2 font-display text-2xl font-semibold text-ink">
-              <GraduationCap size={22} className="text-violet-deep" aria-hidden="true" />
+          <Reveal variant="left">
+            <h3 className="group flex items-center gap-2 font-display text-2xl font-semibold text-ink">
+              <GraduationCap size={22} className="wiggle-on-hover text-violet-deep" aria-hidden="true" />
               Formation
             </h3>
             <div className="mt-8">
@@ -41,9 +42,9 @@ export function Journey() {
             </div>
           </Reveal>
 
-          <Reveal delay={120}>
-            <h3 className="flex items-center gap-2 font-display text-2xl font-semibold text-ink">
-              <Briefcase size={22} className="text-violet-deep" aria-hidden="true" />
+          <Reveal delay={120} variant="right">
+            <h3 className="group flex items-center gap-2 font-display text-2xl font-semibold text-ink">
+              <Briefcase size={22} className="wiggle-on-hover text-violet-deep" aria-hidden="true" />
               Expériences
             </h3>
             <div className="mt-8">
@@ -52,7 +53,7 @@ export function Journey() {
 
             <div className="card mt-12 p-6">
               <h4 className="flex items-center gap-2 text-sm font-semibold text-ink">
-                <Sparkles size={16} className="text-violet-deep" aria-hidden="true" />
+                <Sparkles size={16} className="wiggle-on-hover text-violet-deep" aria-hidden="true" />
                 Autres réalisations personnelles et académiques
               </h4>
               <ul className="mt-4 space-y-3">

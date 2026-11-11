@@ -4,22 +4,22 @@
    Rose et violet répartis : le violet porte le texte d'accent et les boutons,
    le rose sert aux décors, filets et puces. Les sections alternent blanc rosé et rose pastel. */
 @theme {
-  --color-cream: #fffafc;      /* blanc rosé : fond principal */
-  --color-blush: #fbe8f1;      /* rose pastel : sections alternées, survols */
-  --color-powder: #f4cadd;     /* rose poudré : sélection, décors */
-  --color-rose: #d98bb5;       /* rose soutenu : puces, filets, décors (pas de texte) */
-  --color-lavender: #dcd2f8;   /* lavande : bordures, pastilles */
-  --color-violet: #b7a2e3;     /* violet doux : décors, anneaux */
-  --color-violet-deep: #7656a8; /* violet profond : texte d'accent, boutons */
-  --color-violet-hover: #634690;
-  --color-ink: #302638;        /* texte foncé */
-  --color-muted: #6a5d75;      /* texte secondaire */
+  --color-cream: #fff7fb;      /* blanc rosé : fond principal */
+  --color-blush: #ffe0ef;      /* rose vif clair : sections alternées, survols */
+  --color-powder: #ffbfdc;     /* rose bonbon : sélection, décors */
+  --color-rose: #ff4f9a;       /* rose fuchsia : puces, filets, décors (pas de texte) */
+  --color-lavender: #e2d3ff;   /* lavande vive : bordures, pastilles */
+  --color-violet: #a978ff;     /* violet électrique doux : décors, anneaux */
+  --color-violet-deep: #7a2ff0; /* violet vif : texte d'accent, boutons */
+  --color-violet-hover: #6418d6;
+  --color-ink: #2a1538;        /* texte foncé */
+  --color-muted: #66507a;      /* texte secondaire */
 
   --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --shadow-card: 0 1px 2px rgba(118, 86, 168, 0.05);
-  --shadow-card-hover: 0 12px 28px -14px rgba(118, 86, 168, 0.28);
+  --shadow-card: 0 1px 2px rgba(122, 47, 240, 0.06);
+  --shadow-card-hover: 0 12px 28px -14px rgba(122, 47, 240, 0.35);
 }
 
 @layer base {
@@ -30,6 +30,8 @@
 
   body {
     @apply bg-cream text-ink font-sans antialiased;
+    /* Les blocs qui glissent depuis les côtés ne doivent pas créer de défilement horizontal. */
+    overflow-x: clip;
   }
 
   :focus-visible {
@@ -57,7 +59,7 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-violet-deep px-6 py-3 text-sm font-medium tracking-wide text-white shadow-[0_8px_20px_-10px_rgba(118,86,168,0.6)] transition duration-300 hover:-translate-y-0.5 hover:bg-violet-hover hover:shadow-[0_12px_24px_-10px_rgba(118,86,168,0.7)] active:translate-y-0 focus-visible:outline-violet-deep;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-violet-deep px-6 py-3 text-sm font-medium tracking-wide text-white shadow-[0_8px_20px_-10px_rgba(122,47,240,0.65)] transition duration-300 hover:-translate-y-0.5 hover:bg-violet-hover hover:shadow-[0_12px_24px_-10px_rgba(122,47,240,0.75)] active:translate-y-0 focus-visible:outline-violet-deep;
   }
 
   .btn-secondary {
@@ -73,11 +75,176 @@
   }
 
   .card {
-    @apply rounded-3xl border border-lavender/70 bg-white shadow-(--shadow-card) transition duration-300 hover:-translate-y-0.5 hover:border-violet/70 hover:shadow-(--shadow-card-hover);
+    @apply rounded-3xl border border-lavender/70 bg-white shadow-(--shadow-card) transition duration-300 hover:-translate-y-1.5 hover:border-violet/70 hover:shadow-(--shadow-card-hover);
   }
 }
 
-/* Animation d'apparition douce, désactivée si l'utilisateur demande moins de mouvement. */
+/* ---------- Animations ---------- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.08) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes blob {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, -30px) scale(1.12);
+  }
+  66% {
+    transform: translate(-30px, 25px) scale(0.92);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(0.6deg);
+  }
+}
+
+@keyframes gradient-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shine {
+  from {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  to {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-12deg) scale(1.15);
+  }
+  75% {
+    transform: rotate(10deg) scale(1.15);
+  }
+}
+
+@layer utilities {
+  /* Entrée du hero au chargement, en cascade grâce à --d. */
+  .animate-enter {
+    animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  .animate-blob {
+    animation: blob 14s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Dégradé animé dans le texte (nom dans le hero). */
+  .text-gradient {
+    background-image: linear-gradient(110deg, var(--color-violet-deep), var(--color-rose), var(--color-violet), var(--color-violet-deep));
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-pan 6s ease-in-out infinite;
+  }
+
+  /* Puces qui apparaissent une à une quand leur bloc devient visible (--i = rang). */
+  .pop-item {
+    opacity: 0;
+  }
+  /* « backwards » : une fois l'animation finie, le survol peut de nouveau déplacer la puce. */
+  [data-visible='true'] .pop-item {
+    opacity: 1;
+    animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 45ms + 200ms);
+  }
+
+  /* Filet qui se dessine sous le sur-titre des sections. */
+  .eyebrow-line {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  [data-visible='true'] .eyebrow-line {
+    transform: scaleX(1);
+    animation: grow-x 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s backwards;
+  }
+
+  /* Icône qui frétille au survol de sa carte. */
+  .card:hover .wiggle-on-hover,
+  .group:hover > .wiggle-on-hover {
+    animation: wiggle 0.6s ease-in-out;
+  }
+}
+
+/* Reflet lumineux qui traverse le bouton principal au survol. */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: translateX(-120%) skewX(-20deg);
+  z-index: -1;
+  pointer-events: none;
+}
+.btn-primary:hover::after {
+  animation: shine 0.9s ease-out;
+}
+
+/* Tout est désactivé si l'utilisateur demande moins de mouvement : le contenu reste visible et immobile. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -88,6 +255,14 @@
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+  }
+
+  .pop-item,
+  .eyebrow-line {
+    opacity: 1;
+    transform: none;
   }
 
   .card:hover,

@@ -11,7 +11,7 @@ function ProjectVisual({ project }: { project: Project }) {
         src={project.image}
         alt={`Capture d'écran de ${project.name}`}
         loading="lazy"
-        className="aspect-[16/10] w-full object-cover object-top"
+        className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
       />
     )
   }
@@ -22,7 +22,7 @@ function ProjectVisual({ project }: { project: Project }) {
       aria-label={`Visuel du projet ${project.name}`}
       className="relative flex aspect-[16/10] w-full items-end overflow-hidden bg-blush p-6"
     >
-      <span aria-hidden="true" className="font-display text-8xl leading-none font-medium italic text-violet-deep/35">
+      <span aria-hidden="true" className="font-display text-8xl leading-none font-medium italic text-violet-deep/35 transition-transform duration-500 ease-out group-hover:-translate-y-2 group-hover:-rotate-6">
         {project.name.charAt(0)}
       </span>
       <span aria-hidden="true" className="ml-3 mb-2 font-display text-lg text-ink/70">
@@ -34,7 +34,7 @@ function ProjectVisual({ project }: { project: Project }) {
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="card flex h-full flex-col overflow-hidden">
+    <article className="card group flex h-full flex-col overflow-hidden">
       <ProjectVisual project={project} />
 
       <div className="flex flex-1 flex-col p-6 sm:p-7">
@@ -56,7 +56,7 @@ function ProjectCard({ project }: { project: Project }) {
             <ul className="mt-2 space-y-2">
               {project.features.map((f) => (
                 <li key={f} className="flex gap-2 text-sm leading-relaxed text-ink/85">
-                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-violet-deep" aria-hidden="true" />
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-violet-deep transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
                   <span>{f}</span>
                 </li>
               ))}
@@ -146,7 +146,7 @@ export function Projects() {
 
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {projects.map((project, i) => (
-            <Reveal key={project.id} delay={(i % 2) * 100} className="h-full">
+            <Reveal key={project.id} delay={(i % 2) * 120} variant={i % 2 === 0 ? 'left' : 'right'} className="h-full">
               <ProjectCard project={project} />
             </Reveal>
           ))}

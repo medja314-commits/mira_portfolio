@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { skillGroups } from '../data/portfolio'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
@@ -17,12 +18,12 @@ export function Skills() {
 
         <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skillGroups.map((group, i) => (
-            <Reveal key={group.title} delay={i * 60}>
+            <Reveal key={group.title} delay={i * 90} variant="scale" className="h-full">
               <article className="card h-full p-6">
                 <h3 className="font-display text-xl font-semibold text-ink">{group.title}</h3>
                 <ul className="mt-5 flex flex-wrap gap-2" aria-label={`Technologies : ${group.title}`}>
-                  {group.items.map((item) => (
-                    <li key={item} className="chip">
+                  {group.items.map((item, j) => (
+                    <li key={item} className="chip pop-item hover:-translate-y-0.5" style={{ '--i': j } as CSSProperties}>
                       {item}
                     </li>
                   ))}
