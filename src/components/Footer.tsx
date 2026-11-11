@@ -1,4 +1,5 @@
 import { Github } from './GithubIcon'
+import { Linkedin } from './LinkedinIcon'
 import { profile } from '../data/portfolio'
 
 export function Footer() {
@@ -31,6 +32,13 @@ export function Footer() {
               <a href={profile.github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition hover:text-ink">
                 <Github size={15} aria-hidden="true" />
                 GitHub
+                <span className="sr-only">(ouvre un nouvel onglet)</span>
+              </a>
+            </li>
+            <li>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition hover:text-ink">
+                <Linkedin size={14} aria-hidden="true" />
+                LinkedIn
                 <span className="sr-only">(ouvre un nouvel onglet)</span>
               </a>
             </li>

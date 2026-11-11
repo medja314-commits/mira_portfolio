@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { Mail, Send } from 'lucide-react'
 import { Github } from './GithubIcon'
+import { Linkedin } from './LinkedinIcon'
 import { contactIntro, profile } from '../data/portfolio'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
@@ -113,6 +114,20 @@ export function Contact() {
                   <Github size={18} aria-hidden="true" />
                 </span>
                 github.com/medja314-commits
+                <span className="sr-only">(ouvre un nouvel onglet)</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 text-ink transition hover:text-violet-deep"
+              >
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blush text-violet-deep">
+                  <Linkedin size={17} aria-hidden="true" />
+                </span>
+                linkedin.com/in/miraedja
                 <span className="sr-only">(ouvre un nouvel onglet)</span>
               </a>
             </li>

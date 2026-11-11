@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { ArrowDown, Download, Mail } from 'lucide-react'
 import { Github } from './GithubIcon'
+import { Linkedin } from './LinkedinIcon'
 import { profile } from '../data/portfolio'
 
 // Délai d'entrée en cascade pour chaque élément du hero.
@@ -111,6 +112,18 @@ export function Hero() {
               >
                 <Github size={18} aria-hidden="true" className="transition-transform duration-300 group-hover:scale-125 group-hover:-rotate-6" />
                 GitHub
+                <span className="sr-only">(ouvre un nouvel onglet)</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 transition hover:text-ink"
+              >
+                <Linkedin size={17} aria-hidden="true" className="transition-transform duration-300 group-hover:scale-125 group-hover:rotate-6" />
+                LinkedIn
                 <span className="sr-only">(ouvre un nouvel onglet)</span>
               </a>
             </li>

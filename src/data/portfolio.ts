@@ -10,6 +10,7 @@ export const profile = {
     "Étudiante en dernière année de licence Systèmes Informatiques et Génie Logiciel à l'ESATIC, à Abidjan. Je développe des applications web, mobiles et des API REST, et je m'intéresse de près à l'intelligence artificielle.",
   email: "medja314@gmail.com",
   github: "https://github.com/medja314-commits",
+  linkedin: "https://www.linkedin.com/in/miraedja",
   cvPath: "/cv/CV-Mira-EDJA.pdf",
   photo: { jpg: "/images/mira-profil.jpg", webp: "/images/mira-profil.webp" },
   location: "Abidjan, Côte d'Ivoire",
