@@ -31,18 +31,18 @@ export function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open ? 'border-b border-beige/70 bg-cream/90 backdrop-blur-md' : 'bg-transparent'
+        scrolled || open ? 'border-b border-lavender bg-cream/90 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
       <nav aria-label="Navigation principale" className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#accueil" className="font-display text-lg font-semibold tracking-tight text-ink">
-          Mira <span className="text-rose-deep">EDJA</span>
+          Mira <span className="text-violet-deep">EDJA</span>
         </a>
 
         <ul className="hidden items-center gap-1 md:flex">
           {links.map((link) => (
             <li key={link.href}>
-              <a href={link.href} className="rounded-full px-3 py-2 text-sm text-muted transition hover:bg-sand hover:text-ink">
+              <a href={link.href} className="rounded-full px-3 py-2 text-sm text-muted transition hover:bg-blush hover:text-ink">
                 {link.label}
               </a>
             </li>
@@ -51,7 +51,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-sand md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink transition hover:bg-blush md:hidden"
           aria-expanded={open}
           aria-controls="menu-mobile"
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -62,13 +62,13 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <ul id="menu-mobile" className="border-t border-beige/70 bg-cream px-4 py-3 md:hidden">
+        <ul id="menu-mobile" className="border-t border-lavender bg-cream px-4 py-3 md:hidden">
           {links.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-xl px-3 py-3 text-base text-ink transition hover:bg-sand"
+                className="block rounded-xl px-3 py-3 text-base text-ink transition hover:bg-blush"
               >
                 {link.label}
               </a>

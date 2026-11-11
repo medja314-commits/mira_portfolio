@@ -20,9 +20,9 @@ function ProjectVisual({ project }: { project: Project }) {
     <div
       role="img"
       aria-label={`Visuel du projet ${project.name}`}
-      className="relative flex aspect-[16/10] w-full items-end overflow-hidden bg-linear-to-br from-rose-soft via-cream to-beige p-6"
+      className="relative flex aspect-[16/10] w-full items-end overflow-hidden bg-blush p-6"
     >
-      <span aria-hidden="true" className="font-display text-7xl leading-none font-semibold text-white/80">
+      <span aria-hidden="true" className="font-display text-8xl leading-none font-medium italic text-violet-deep/35">
         {project.name.charAt(0)}
       </span>
       <span aria-hidden="true" className="ml-3 mb-2 font-display text-lg text-ink/70">
@@ -39,7 +39,7 @@ function ProjectCard({ project }: { project: Project }) {
 
       <div className="flex flex-1 flex-col p-6 sm:p-7">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full bg-rose-soft px-3 py-1 text-xs font-medium text-rose-deep">{project.status}</span>
+          <span className="rounded-full bg-blush px-3 py-1 text-xs font-medium text-violet-deep">{project.status}</span>
         </div>
 
         <h3 className="mt-4 font-display text-2xl font-semibold text-ink">{project.name}</h3>
@@ -56,7 +56,7 @@ function ProjectCard({ project }: { project: Project }) {
             <ul className="mt-2 space-y-2">
               {project.features.map((f) => (
                 <li key={f} className="flex gap-2 text-sm leading-relaxed text-ink/85">
-                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-rose-deep" aria-hidden="true" />
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-violet-deep" aria-hidden="true" />
                   <span>{f}</span>
                 </li>
               ))}
@@ -81,8 +81,8 @@ function ProjectCard({ project }: { project: Project }) {
         )}
 
         {project.role && (
-          <p className="mt-5 flex gap-2 rounded-2xl bg-sand/80 p-4 text-sm leading-relaxed text-ink/85">
-            <UserCheck size={16} className="mt-0.5 shrink-0 text-rose-deep" aria-hidden="true" />
+          <p className="mt-5 flex gap-2 rounded-2xl bg-blush/60 p-4 text-sm leading-relaxed text-ink/85">
+            <UserCheck size={16} className="mt-0.5 shrink-0 text-violet-deep" aria-hidden="true" />
             <span>
               <strong className="font-semibold text-ink">Mon rôle : </strong>
               {project.role}
@@ -135,7 +135,7 @@ export function Projects() {
               href="https://github.com/medja314-commits"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink underline decoration-rose-deep underline-offset-4 transition hover:text-rose-deep"
+              className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-ink underline decoration-rose underline-offset-4 transition hover:text-violet-deep"
             >
               Tous mes dépôts sur GitHub
               <ArrowUpRight size={16} aria-hidden="true" />

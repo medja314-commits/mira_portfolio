@@ -31,7 +31,7 @@ export function validate(values: FormValues): FormErrors {
 }
 
 const fieldClass =
-  'mt-2 w-full rounded-2xl border border-beige bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/70 transition focus:border-rose-deep focus:outline-none focus:ring-2 focus:ring-rose-deep/20 aria-[invalid=true]:border-red-700'
+  'mt-2 w-full rounded-2xl border border-lavender bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/70 transition focus:border-violet-deep focus:outline-none focus:ring-2 focus:ring-violet-deep/20 aria-[invalid=true]:border-red-700'
 
 export function Contact() {
   const [values, setValues] = useState<FormValues>({ name: '', email: '', message: '' })
@@ -95,8 +95,8 @@ export function Contact() {
 
           <ul className="mt-10 space-y-4 text-sm">
             <li>
-              <a href={`mailto:${profile.email}`} className="inline-flex items-center gap-3 text-ink transition hover:text-rose-deep">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-soft text-rose-deep">
+              <a href={`mailto:${profile.email}`} className="inline-flex items-center gap-3 text-ink transition hover:text-violet-deep">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blush text-violet-deep">
                   <Mail size={18} aria-hidden="true" />
                 </span>
                 {profile.email}
@@ -107,9 +107,9 @@ export function Contact() {
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 text-ink transition hover:text-rose-deep"
+                className="inline-flex items-center gap-3 text-ink transition hover:text-violet-deep"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-soft text-rose-deep">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-blush text-violet-deep">
                   <Github size={18} aria-hidden="true" />
                 </span>
                 github.com/medja314-commits
@@ -127,7 +127,7 @@ export function Contact() {
 
             <div>
               <label htmlFor="name" className="text-sm font-medium text-ink">
-                Nom complet <span className="text-rose-deep" aria-hidden="true">*</span>
+                Nom complet <span className="text-violet-deep" aria-hidden="true">*</span>
               </label>
               <input
                 id="name"
@@ -150,7 +150,7 @@ export function Contact() {
 
             <div>
               <label htmlFor="email" className="text-sm font-medium text-ink">
-                Adresse e-mail <span className="text-rose-deep" aria-hidden="true">*</span>
+                Adresse e-mail <span className="text-violet-deep" aria-hidden="true">*</span>
               </label>
               <input
                 id="email"
@@ -173,7 +173,7 @@ export function Contact() {
 
             <div>
               <label htmlFor="message" className="text-sm font-medium text-ink">
-                Message <span className="text-rose-deep" aria-hidden="true">*</span>
+                Message <span className="text-violet-deep" aria-hidden="true">*</span>
               </label>
               <textarea
                 id="message"

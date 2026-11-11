@@ -12,7 +12,7 @@ export function About() {
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-1">
             <div className="card p-6">
               <h3 className="flex items-center gap-2 text-sm font-semibold text-ink">
-                <Sparkles size={16} className="text-rose-deep" aria-hidden="true" />
+                <Sparkles size={16} className="text-violet-deep" aria-hidden="true" />
                 Qualités
               </h3>
               <ul className="mt-4 flex flex-wrap gap-2">
@@ -25,7 +25,7 @@ export function About() {
             </div>
             <div className="card p-6">
               <h3 className="flex items-center gap-2 text-sm font-semibold text-ink">
-                <Languages size={16} className="text-rose-deep" aria-hidden="true" />
+                <Languages size={16} className="text-violet-deep" aria-hidden="true" />
                 Langues
               </h3>
               <ul className="mt-4 flex flex-wrap gap-2">

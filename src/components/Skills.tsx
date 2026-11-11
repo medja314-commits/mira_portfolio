@@ -4,7 +4,7 @@ import { SectionHeading } from './SectionHeading'
 
 export function Skills() {
   return (
-    <section id="competences" aria-labelledby="titre-competences" className="scroll-mt-20 bg-sand/60 py-20 sm:py-28">
+    <section id="competences" aria-labelledby="titre-competences" className="scroll-mt-20 bg-blush/60 py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading

@@ -4,10 +4,10 @@ import { profile } from '../data/portfolio'
 export function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-beige/70 bg-sand/50">
+    <footer className="border-t border-lavender bg-blush/60">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 py-10 sm:flex-row sm:px-6 lg:px-8">
         <a href="#accueil" className="font-display text-lg font-semibold text-ink">
-          {profile.firstName} <span className="text-rose-deep">{profile.lastName}</span>
+          {profile.firstName} <span className="text-violet-deep">{profile.lastName}</span>
         </a>
 
         <nav aria-label="Liens utiles">

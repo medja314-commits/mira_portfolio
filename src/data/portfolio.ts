@@ -5,7 +5,7 @@ export const profile = {
   firstName: "Mira",
   lastName: "EDJA",
   title: "Développeuse Web & Mobile",
-  tagline: "Je conçois des applications utiles, de l'interface jusqu'à l'intelligence artificielle.",
+  tagline: "L'ingénierie logicielle au service d'idées qui font la différence.",
   intro:
     "Étudiante en dernière année de licence Systèmes Informatiques et Génie Logiciel à l'ESATIC, à Abidjan. Je développe des applications web, mobiles et des API REST, et je m'intéresse de près à l'intelligence artificielle.",
   email: "medja314@gmail.com",

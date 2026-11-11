@@ -7,18 +7,18 @@ export function Hero() {
   return (
     <section id="accueil" aria-labelledby="titre-accueil" className="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28">
       {/* Touches décoratives discrètes, sans animation. */}
-      <div aria-hidden="true" className="pointer-events-none absolute -top-24 right-[-6rem] h-96 w-96 rounded-full bg-rose-soft blur-3xl" />
-      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-[-8rem] h-80 w-80 rounded-full bg-sand blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -top-24 right-[-6rem] h-96 w-96 rounded-full bg-blush blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-[-8rem] h-80 w-80 rounded-full bg-blush blur-3xl" />
 
       <div className="relative mx-auto grid grid-cols-1 max-w-6xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:px-8">
         <Reveal>
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-beige bg-white/70 px-4 py-1.5 text-xs font-medium tracking-wide text-muted uppercase">
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-rose-deep" />
+          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-lavender bg-white px-4 py-1.5 text-xs font-medium tracking-wide text-muted uppercase">
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-violet-deep" />
             Disponible pour un stage de trois mois
           </p>
 
           <h1 id="titre-accueil" className="font-display text-5xl leading-[1.05] font-semibold tracking-tight text-ink sm:text-6xl">
-            {profile.firstName} <span className="text-rose-deep">{profile.lastName}</span>
+            {profile.firstName} <em>{profile.lastName}</em>
           </h1>
 
           <p className="mt-4 text-xl font-medium text-ink/80 sm:text-2xl">{profile.title}</p>
@@ -64,8 +64,8 @@ export function Hero() {
 
         <Reveal delay={150} className="justify-self-center lg:justify-self-end">
           <div className="relative w-64 sm:w-80">
-            <div aria-hidden="true" className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2.5rem] bg-beige" />
-            <figure className="relative overflow-hidden rounded-[2.5rem] bg-sand shadow-xl shadow-ink/10">
+            <div aria-hidden="true" className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-full rounded-b-[2.5rem] bg-lavender" />
+            <figure className="relative overflow-hidden rounded-t-full rounded-b-[2.5rem] bg-blush shadow-xl shadow-violet-deep/15">
               <picture>
                 <source srcSet={profile.photo.webp} type="image/webp" />
                 <img

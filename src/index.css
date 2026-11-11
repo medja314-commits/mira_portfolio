@@ -1,19 +1,25 @@
 @import "tailwindcss";
 
-/* Palette : fond crème, texte brun très foncé, accent rose poudré, touches de beige. */
+/* Direction « Pink & Lavender Clean Girl ».
+   Rose et violet répartis : le violet porte le texte d'accent et les boutons,
+   le rose sert aux décors, filets et puces. Les sections alternent blanc rosé et rose pastel. */
 @theme {
-  --color-cream: #fbf7f2;
-  --color-sand: #f4ebe1;
-  --color-beige: #e7d6c4;
-  --color-ink: #2b211d;
-  --color-muted: #6b5c54;
-  --color-rose: #e3aeb4;
-  --color-rose-soft: #f7e6e7;
-  --color-rose-deep: #a4515c;
-  --color-rose-deep-hover: #8c4049;
+  --color-cream: #fffafc;      /* blanc rosé : fond principal */
+  --color-blush: #fbe8f1;      /* rose pastel : sections alternées, survols */
+  --color-powder: #f4cadd;     /* rose poudré : sélection, décors */
+  --color-rose: #d98bb5;       /* rose soutenu : puces, filets, décors (pas de texte) */
+  --color-lavender: #dcd2f8;   /* lavande : bordures, pastilles */
+  --color-violet: #b7a2e3;     /* violet doux : décors, anneaux */
+  --color-violet-deep: #7656a8; /* violet profond : texte d'accent, boutons */
+  --color-violet-hover: #634690;
+  --color-ink: #302638;        /* texte foncé */
+  --color-muted: #6a5d75;      /* texte secondaire */
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --shadow-card: 0 1px 2px rgba(118, 86, 168, 0.05);
+  --shadow-card-hover: 0 12px 28px -14px rgba(118, 86, 168, 0.28);
 }
 
 @layer base {
@@ -27,34 +33,47 @@
   }
 
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-rose-deep;
+    @apply outline-2 outline-offset-2 outline-violet-deep;
   }
 
   ::selection {
-    background: var(--color-rose);
+    background: var(--color-powder);
     color: var(--color-ink);
+  }
+
+  /* Titres : Cormorant Garamond, léger et expressif ; l'italique sert d'accent. */
+  h1,
+  h2,
+  h3 {
+    font-weight: 500;
+  }
+
+  h1 em,
+  h2 em {
+    font-style: italic;
+    color: var(--color-violet-deep);
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-rose-deep px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-rose-deep-hover focus-visible:outline-rose-deep;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-violet-deep px-6 py-3 text-sm font-medium tracking-wide text-white shadow-[0_8px_20px_-10px_rgba(118,86,168,0.6)] transition duration-300 hover:-translate-y-0.5 hover:bg-violet-hover hover:shadow-[0_12px_24px_-10px_rgba(118,86,168,0.7)] active:translate-y-0 focus-visible:outline-violet-deep;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/25 bg-transparent px-6 py-3 text-sm font-medium text-ink transition hover:border-ink hover:bg-sand;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-violet-deep/35 bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-violet-deep transition duration-300 hover:-translate-y-0.5 hover:border-violet-deep hover:bg-blush;
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-beige bg-white/70 px-3 py-1 text-xs font-medium text-ink;
+    @apply inline-flex items-center rounded-full border border-lavender bg-white px-3 py-1 text-xs font-medium text-ink transition duration-300 hover:border-violet hover:bg-blush;
   }
 
   .section-title {
-    @apply font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl;
+    @apply font-display text-4xl leading-[1.1] font-medium tracking-tight text-ink sm:text-5xl;
   }
 
   .card {
-    @apply rounded-3xl border border-beige/80 bg-white/70 shadow-[0_1px_2px_rgba(43,33,29,0.04)];
+    @apply rounded-3xl border border-lavender/70 bg-white shadow-(--shadow-card) transition duration-300 hover:-translate-y-0.5 hover:border-violet/70 hover:shadow-(--shadow-card-hover);
   }
 }
 
@@ -69,5 +88,11 @@
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+
+  .card:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none;
   }
 }
