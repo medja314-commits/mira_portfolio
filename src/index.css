@@ -92,6 +92,19 @@
   }
 }
 
+@keyframes word-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(0.4em);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
 @keyframes pop-in {
   0% {
     opacity: 0;
@@ -175,6 +188,19 @@
   /* Entrée du hero au chargement, en cascade grâce à --d. */
   .animate-enter {
     animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* Accroche : chaque mot sort du flou en montant légèrement. */
+  .animate-word {
+    animation: word-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* Surligneur qui se dessine de gauche à droite sous la fin de l'accroche. */
+  .tagline-highlight {
+    transform-origin: left;
+    animation: grow-x 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
     animation-delay: var(--d, 0ms);
   }
 

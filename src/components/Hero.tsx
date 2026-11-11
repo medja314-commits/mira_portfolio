@@ -6,6 +6,43 @@ import { profile } from '../data/portfolio'
 // Délai d'entrée en cascade pour chaque élément du hero.
 const delay = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
 
+// Les mots de l'accroche à partir de celui-ci sont surlignés (« qui font la différence. »).
+const HIGHLIGHT_FROM = 'qui'
+const WORD_STEP_MS = 110
+
+// Accroche animée : les mots sortent du flou un par un, puis un surligneur en dégradé
+// se dessine sous la fin de la phrase. Le texte complet reste lu d'un bloc par les lecteurs d'écran.
+function AnimatedTagline({ text, startMs, highlightFrom }: { text: string; startMs: number; highlightFrom: string }) {
+  const words = text.split(' ')
+  const cut = words.lastIndexOf(highlightFrom)
+  const splitAt = cut === -1 ? words.length : cut
+  const word = (w: string, i: number) => (
+    <span key={i} className="animate-word inline-block" style={delay(startMs + i * WORD_STEP_MS)}>
+      {w}
+      {i < words.length - 1 ? ' ' : ''}
+    </span>
+  )
+  const highlightDelay = startMs + words.length * WORD_STEP_MS + 150
+
+  return (
+    <p className="mt-6 max-w-xl font-display text-2xl leading-snug text-ink sm:text-[1.7rem]">
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {words.slice(0, splitAt).map((w, i) => word(w, i))}
+        {splitAt < words.length && (
+          <span className="relative isolate inline-block whitespace-nowrap">
+            <span
+              className="tagline-highlight absolute inset-x-0 bottom-1 -z-10 h-[0.45em] rounded-sm bg-gradient-to-r from-powder via-lavender to-powder"
+              style={delay(highlightDelay)}
+            />
+            {words.slice(splitAt).map((w, j) => word(w, splitAt + j))}
+          </span>
+        )}
+      </span>
+    </p>
+  )
+}
+
 export function Hero() {
   return (
     <section id="accueil" aria-labelledby="titre-accueil" className="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28">
@@ -47,15 +84,13 @@ export function Hero() {
             {profile.title}
           </p>
 
-          <p style={delay(360)} className="animate-enter mt-6 max-w-xl font-display text-2xl leading-snug text-ink sm:text-[1.7rem]">
-            {profile.tagline}
-          </p>
+          <AnimatedTagline text={profile.tagline} startMs={450} highlightFrom={HIGHLIGHT_FROM} />
 
-          <p style={delay(480)} className="animate-enter mt-5 max-w-xl text-base leading-relaxed text-muted">
+          <p style={delay(800)} className="animate-enter mt-5 max-w-xl text-base leading-relaxed text-muted">
             {profile.intro}
           </p>
 
-          <div style={delay(600)} className="animate-enter mt-9 flex flex-wrap items-center gap-3">
+          <div style={delay(950)} className="animate-enter mt-9 flex flex-wrap items-center gap-3">
             <a href="#projets" className="btn-primary group">
               Découvrir mes projets
               <ArrowDown size={16} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1" />
@@ -66,7 +101,7 @@ export function Hero() {
             </a>
           </div>
 
-          <ul style={delay(720)} className="animate-enter mt-8 flex flex-wrap items-center gap-5 text-sm text-muted">
+          <ul style={delay(1050)} className="animate-enter mt-8 flex flex-wrap items-center gap-5 text-sm text-muted">
             <li>
               <a
                 href={profile.github}

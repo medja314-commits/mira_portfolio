@@ -6,13 +6,35 @@ import { SectionHeading } from './SectionHeading'
 
 function ProjectVisual({ project }: { project: Project }) {
   if (project.image) {
+    const { webp, jpg, alt, credit } = project.image
     return (
-      <img
-        src={project.image}
-        alt={`Capture d'écran de ${project.name}`}
-        loading="lazy"
-        className="aspect-[16/10] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
-      />
+      <figure className="relative overflow-hidden">
+        <picture>
+          <source srcSet={webp} type="image/webp" />
+          <img
+            src={jpg}
+            alt={alt}
+            width={1200}
+            height={750}
+            loading="lazy"
+            decoding="async"
+            className="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          />
+        </picture>
+        {/* Voile coloré aux tons du site, qui s'éclaircit au survol. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-violet-deep/35 via-transparent to-rose/25 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-40"
+        />
+        <figcaption className="absolute right-2 bottom-2 rounded-full bg-ink/55 px-2.5 py-1 text-[10px] text-white/90 backdrop-blur-sm">
+          Photo :{' '}
+          <a href={credit.url} target="_blank" rel="noopener noreferrer" className="underline decoration-white/50 underline-offset-2 hover:decoration-white">
+            {credit.author}
+          </a>{' '}
+          · {credit.license}
+          <span className="sr-only"> (ouvre un nouvel onglet)</span>
+        </figcaption>
+      </figure>
     )
   }
   // Visuel de remplacement tant qu'aucune capture d'écran n'est fournie.
