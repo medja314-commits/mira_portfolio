@@ -3,6 +3,7 @@ import { ArrowDown, Download, Mail } from 'lucide-react'
 import { Github } from './GithubIcon'
 import { Linkedin } from './LinkedinIcon'
 import { profile } from '../data/portfolio'
+import { useMagnetic } from '../hooks/useMagnetic'
 
 // Délai d'entrée en cascade pour chaque élément du hero.
 const delay = (ms: number) => ({ '--d': `${ms}ms` }) as CSSProperties
@@ -45,15 +46,13 @@ function AnimatedTagline({ text, startMs, highlightFrom }: { text: string; start
 }
 
 export function Hero() {
+  const primaryRef = useMagnetic<HTMLAnchorElement>()
+  const secondaryRef = useMagnetic<HTMLAnchorElement>()
+
   return (
     <section id="accueil" aria-labelledby="titre-accueil" className="relative overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28">
-      {/* Taches de couleur qui dérivent lentement en arrière-plan. */}
-      <div aria-hidden="true" className="animate-blob pointer-events-none absolute -top-24 right-[-6rem] h-96 w-96 rounded-full bg-powder/70 blur-3xl" />
-      <div
-        aria-hidden="true"
-        style={{ animationDelay: '-5s' }}
-        className="animate-blob pointer-events-none absolute top-1/3 left-1/3 h-72 w-72 rounded-full bg-lavender/80 blur-3xl"
-      />
+      {/* Deux halos très légers qui dérivent lentement en arrière-plan. */}
+      <div aria-hidden="true" className="animate-blob pointer-events-none absolute -top-24 right-[-6rem] h-96 w-96 rounded-full bg-powder/50 blur-3xl" />
       <div
         aria-hidden="true"
         style={{ animationDelay: '-9s' }}
@@ -73,12 +72,21 @@ export function Hero() {
             Disponible pour un stage de trois mois
           </p>
 
-          <h1
-            id="titre-accueil"
-            style={delay(120)}
-            className="animate-enter font-display text-5xl leading-[1.05] font-semibold tracking-tight text-ink sm:text-6xl"
-          >
-            {profile.firstName} <em className="text-gradient pr-1">{profile.lastName}</em>
+          {/* Chaque mot monte depuis un masque, puis le point rose tombe avec un rebond. */}
+          <h1 id="titre-accueil" className="font-display text-5xl leading-[1.05] font-semibold tracking-tight text-ink sm:text-6xl">
+            <span className="word-mask">
+              <span className="word-rise" style={delay(100)}>
+                {profile.firstName}
+              </span>
+            </span>{' '}
+            <span className="word-mask">
+              <span className="word-rise" style={delay(240)}>
+                <em>{profile.lastName}</em>
+              </span>
+            </span>
+            <span aria-hidden="true" className="dot-drop text-rose" style={delay(750)}>
+              .
+            </span>
           </h1>
 
           <p style={delay(240)} className="animate-enter mt-4 text-xl font-medium text-ink/80 sm:text-2xl">
@@ -92,11 +100,11 @@ export function Hero() {
           </p>
 
           <div style={delay(950)} className="animate-enter mt-9 flex flex-wrap items-center gap-3">
-            <a href="#projets" className="btn-primary group">
+            <a ref={primaryRef} href="#projets" className="btn-primary group">
               Découvrir mes projets
               <ArrowDown size={16} aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-1" />
             </a>
-            <a href={profile.cvPath} download className="btn-secondary group">
+            <a ref={secondaryRef} href={profile.cvPath} download className="btn-secondary group">
               <Download size={16} aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-y-0.5" />
               Télécharger mon CV
             </a>
@@ -136,13 +144,15 @@ export function Hero() {
           </ul>
         </div>
 
-        <div style={delay(300)} className="animate-enter justify-self-center lg:justify-self-end">
-          <div className="animate-float relative w-64 sm:w-80">
+        {/* Portrait : en premier et plus petit sur mobile, centré dans sa colonne sur ordinateur.
+            Le fond de la figure reprend celui de la photo (#fbfbfc) pour laisser de l'air au-dessus de la tête. */}
+        <div style={delay(300)} className="animate-enter order-first justify-self-center lg:order-none">
+          <div className="animate-float relative w-44 sm:w-60 lg:w-80">
             <div
               aria-hidden="true"
-              className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-full rounded-b-[2.5rem] bg-gradient-to-br from-lavender via-powder to-violet/60"
+              className="absolute inset-0 translate-x-3 translate-y-3 rounded-t-full rounded-b-[2rem] border border-violet/60 lg:translate-x-4 lg:translate-y-4"
             />
-            <figure className="group relative overflow-hidden rounded-t-full rounded-b-[2.5rem] bg-blush shadow-xl shadow-violet-deep/20">
+            <figure className="group relative overflow-hidden rounded-t-full rounded-b-[2rem] bg-[#fafafb] pt-[14%] shadow-[0_30px_60px_-30px_rgba(28,26,31,0.3)]">
               <picture>
                 <source srcSet={profile.photo.webp} type="image/webp" />
                 <img
@@ -151,7 +161,7 @@ export function Hero() {
                   width={720}
                   height={1080}
                   fetchPriority="high"
-                  className="aspect-[2/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="portrait-fade aspect-[2/3] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               </picture>
             </figure>

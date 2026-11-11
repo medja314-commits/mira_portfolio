@@ -66,17 +66,8 @@ export type Project = {
   status: string;
   repo: string;
   demo?: string; // aucune démo fournie pour l'instant : le bouton n'apparaît pas tant que ce champ est vide
-  image?: ProjectImage;
 };
 
-// Photo d'illustration (banque d'images libre) : ce n'est pas une capture du projet.
-// Le crédit est affiché sur la carte, comme l'exigent les licences CC BY.
-export type ProjectImage = {
-  webp: string;
-  jpg: string;
-  alt: string;
-  credit: { author: string; license: string; url: string };
-};
 
 export const projects: Project[] = [
   {
@@ -96,16 +87,6 @@ export const projects: Project[] = [
     role: "Responsable du module Assistant IA (RAG), au sein d'une équipe de quatre personnes.",
     status: "Prototype de démonstration · données fictives",
     repo: "https://github.com/medja314-commits/PassSante",
-    image: {
-      webp: "/projects/passsante.webp",
-      jpg: "/projects/passsante.jpg",
-      alt: "Une médecin consulte un dossier patient sur une tablette, à son bureau.",
-      credit: {
-        author: "Shixart1985",
-        license: "CC BY 2.0",
-        url: "https://commons.wikimedia.org/wiki/File:Doctor_reviews_patient_information_on_tablet_in_an_office_setting.jpg",
-      },
-    },
   },
   {
     id: "lastic-whatsapp",
@@ -123,16 +104,6 @@ export const projects: Project[] = [
     tech: ["Node.js", "API WhatsApp Cloud (Meta)", "API REST", "Render"],
     status: "Service configuré pour Render",
     repo: "https://github.com/medja314-commits/lastic-whatsapp",
-    image: {
-      webp: "/projects/lastic-whatsapp.webp",
-      jpg: "/projects/lastic-whatsapp.jpg",
-      alt: "Deux mains tapent un message dans une conversation WhatsApp sur un smartphone.",
-      credit: {
-        author: "Helar Lukats",
-        license: "CC BY-SA 4.0",
-        url: "https://commons.wikimedia.org/wiki/File:Whatsapp_texting.jpg",
-      },
-    },
   },
   {
     id: "renewguard-ai",
@@ -143,16 +114,6 @@ export const projects: Project[] = [
     tech: [],
     status: "En cours de développement",
     repo: "https://github.com/medja314-commits/Renewguard-ai",
-    image: {
-      webp: "/projects/renewguard-ai.webp",
-      jpg: "/projects/renewguard-ai.jpg",
-      alt: "Des techniciens transportent des panneaux solaires dans un village.",
-      credit: {
-        author: "IAfrica76",
-        license: "CC0",
-        url: "https://commons.wikimedia.org/wiki/File:Innovation_Africa_-_solar_panels.jpg",
-      },
-    },
   },
 ];
 

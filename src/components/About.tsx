@@ -1,5 +1,6 @@
 import { Languages, Sparkles } from 'lucide-react'
 import { aboutParagraphs, profile } from '../data/portfolio'
+import { InkText } from './InkText'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 
@@ -39,10 +40,8 @@ export function About() {
           </div>
         </Reveal>
 
-        <Reveal delay={120} variant="right" className="space-y-6 text-base leading-relaxed text-ink/85 sm:text-lg">
-          {aboutParagraphs.map((p) => (
-            <p key={p.slice(0, 30)}>{p}</p>
-          ))}
+        <Reveal delay={120} variant="right">
+          <InkText paragraphs={aboutParagraphs} className="space-y-6 text-base leading-relaxed sm:text-lg" />
         </Reveal>
       </div>
     </section>

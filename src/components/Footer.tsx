@@ -1,11 +1,62 @@
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react'
 import { Github } from './GithubIcon'
 import { Linkedin } from './LinkedinIcon'
 import { profile } from '../data/portfolio'
 
+// Grande signature décorative : les lettres montent une à une quand elle apparaît,
+// se soulèvent au survol (souris uniquement) et le point rose sautille de temps en temps.
+function Signoff({ name }: { name: string }) {
+  const ref = useRef<HTMLParagraphElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (typeof IntersectionObserver === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setVisible(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '100000px 0px 0px 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  const lift = (e: ReactPointerEvent<HTMLSpanElement>) => {
+    if (e.pointerType !== 'mouse') return
+    const letter = e.currentTarget
+    letter.classList.add('is-lift')
+    window.setTimeout(() => letter.classList.remove('is-lift'), 650)
+  }
+
+  return (
+    <p ref={ref} aria-hidden="true" data-visible={visible} className="signoff text-center sm:text-left">
+      {[...name].map((ch, i) => (
+        <span key={i} className="signoff-letter" style={{ '--i': i } as CSSProperties} onPointerEnter={lift}>
+          {ch}
+        </span>
+      ))}
+      <span className="signoff-letter signoff-dot" style={{ '--i': name.length } as CSSProperties}>
+        .
+      </span>
+    </p>
+  )
+}
+
 export function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-lavender bg-blush/60">
+    <footer className="overflow-hidden border-t border-lavender bg-blush/60">
+      <div className="mx-auto max-w-6xl px-4 pt-14 sm:px-6 lg:px-8">
+        <Signoff name={profile.firstName} />
+      </div>
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 py-10 sm:flex-row sm:px-6 lg:px-8">
         <a href="#accueil" className="font-display text-lg font-semibold text-ink">
           {profile.firstName} <span className="text-violet-deep">{profile.lastName}</span>

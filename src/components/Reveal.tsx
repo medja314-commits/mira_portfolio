@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 
 type RevealVariant = 'up' | 'left' | 'right' | 'scale'
 
@@ -9,16 +9,12 @@ type RevealProps = {
   variant?: RevealVariant
 }
 
-const hiddenClass: Record<RevealVariant, string> = {
-  up: 'translate-y-10 opacity-0',
-  left: '-translate-x-12 opacity-0',
-  right: 'translate-x-12 opacity-0',
-  scale: 'scale-90 opacity-0',
-}
-
-// Fait apparaître son contenu quand il entre dans la fenêtre (glissement ou zoom selon `variant`).
-// Expose `data-visible` pour que les enfants puissent lancer leurs propres animations (puces en cascade, filets…).
-// Sans IntersectionObserver ou avec « réduire les animations », le contenu s'affiche directement.
+// Fait apparaître son contenu quand il entre dans la fenêtre : il sort d'un léger flou en glissant
+// (ou en zoomant selon `variant`). Les styles sont dans index.css ([data-reveal]).
+// - `data-visible` permet aux enfants de lancer leurs propres animations (puces en cascade, filets, rideau des photos…).
+// - La marge haute géante de l'observateur compte comme « vu » tout ce qui est au-dessus de l'écran :
+//   un saut direct vers une ancre (#contact) ne laisse jamais une section invisible.
+// - Sans IntersectionObserver ou avec « réduire les animations », le contenu s'affiche directement.
 export function Reveal({ children, className = '', delay = 0, variant = 'up' }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
@@ -40,7 +36,7 @@ export function Reveal({ children, className = '', delay = 0, variant = 'up' }: 
           observer.disconnect()
         }
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+      { rootMargin: '100000px 0px -10% 0px', threshold: 0 },
     )
     observer.observe(el)
     return () => observer.disconnect()
@@ -49,13 +45,10 @@ export function Reveal({ children, className = '', delay = 0, variant = 'up' }: 
   return (
     <div
       ref={ref}
+      data-reveal={variant}
       data-visible={visible}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
-        visible
-          ? 'translate-x-0 translate-y-0 scale-100 opacity-100'
-          : `${hiddenClass[variant]} motion-reduce:translate-x-0 motion-reduce:translate-y-0 motion-reduce:scale-100 motion-reduce:opacity-100`
-      } ${className}`}
+      style={{ '--reveal-delay': `${delay}ms` } as CSSProperties}
+      className={className}
     >
       {children}
     </div>

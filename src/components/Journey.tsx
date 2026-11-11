@@ -1,15 +1,56 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useRef, type CSSProperties } from 'react'
 import { GraduationCap, Briefcase, Sparkles } from 'lucide-react'
 import { education, experience, otherWork, type TimelineItem } from '../data/portfolio'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 
+// Frise : une ligne en dégradé se remplit en suivant le lecteur et chaque point s'allume quand il passe
+// la ligne de lecture. Calculs seulement pendant que la frise est à l'écran, au rythme des images.
 function Timeline({ items }: { items: TimelineItem[] }) {
+  const ref = useRef<HTMLOListElement>(null)
+
+  useEffect(() => {
+    const list = ref.current
+    if (!list) return
+    const entries = [...list.querySelectorAll<HTMLElement>(':scope > li')]
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      list.style.setProperty('--p', '1')
+      entries.forEach((li) => li.classList.add('is-passed'))
+      return
+    }
+
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const line = window.innerHeight * 0.6
+      const r = list.getBoundingClientRect()
+      const progress = Math.min(1, Math.max(0, (line - r.top) / r.height))
+      list.style.setProperty('--p', progress.toFixed(3))
+      entries.forEach((li) => li.classList.toggle('is-passed', li.getBoundingClientRect().top + 12 < line))
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) window.addEventListener('scroll', onScroll, { passive: true })
+      else window.removeEventListener('scroll', onScroll)
+      update()
+    })
+    io.observe(list)
+    return () => {
+      io.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
-    <ol className="relative ml-2 space-y-10 border-l border-lavender pl-8">
+    <ol ref={ref} className="relative ml-2 space-y-10 border-l border-lavender pl-8">
+      <span aria-hidden="true" className="timeline-rail" />
       {items.map((item, i) => (
-        <li key={`${item.period}-${item.title}`} className="group pop-item relative" style={{ '--i': i * 3 } as CSSProperties}>
-          <span aria-hidden="true" className="absolute top-1.5 -left-[2.3rem] h-3 w-3 rounded-full border-2 border-violet-deep bg-cream transition duration-300 group-hover:scale-150 group-hover:bg-rose" />
+        <li key={`${item.period}-${item.title}`} className="timeline-item group pop-item relative" style={{ '--i': i * 3 } as CSSProperties}>
+          <span aria-hidden="true" className="timeline-dot absolute top-1.5 -left-[2.3rem] h-3 w-3 rounded-full border-2 border-violet-deep bg-cream transition duration-300 group-hover:scale-150 group-hover:bg-rose" />
           <p className="text-xs font-semibold tracking-wide text-violet-deep uppercase">{item.period}</p>
           <h4 className="mt-1.5 font-display text-xl font-semibold text-ink">{item.title}</h4>
           <p className="mt-1 text-sm text-muted">

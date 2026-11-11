@@ -4,61 +4,9 @@ import { projects, type Project } from '../data/portfolio'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 
-function ProjectVisual({ project }: { project: Project }) {
-  if (project.image) {
-    const { webp, jpg, alt, credit } = project.image
-    return (
-      <figure className="relative overflow-hidden">
-        <picture>
-          <source srcSet={webp} type="image/webp" />
-          <img
-            src={jpg}
-            alt={alt}
-            width={1200}
-            height={750}
-            loading="lazy"
-            decoding="async"
-            className="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-          />
-        </picture>
-        {/* Voile coloré aux tons du site, qui s'éclaircit au survol. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-violet-deep/35 via-transparent to-rose/25 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-40"
-        />
-        <figcaption className="absolute right-2 bottom-2 rounded-full bg-ink/55 px-2.5 py-1 text-[10px] text-white/90 backdrop-blur-sm">
-          Photo :{' '}
-          <a href={credit.url} target="_blank" rel="noopener noreferrer" className="underline decoration-white/50 underline-offset-2 hover:decoration-white">
-            {credit.author}
-          </a>{' '}
-          · {credit.license}
-          <span className="sr-only"> (ouvre un nouvel onglet)</span>
-        </figcaption>
-      </figure>
-    )
-  }
-  // Visuel de remplacement tant qu'aucune capture d'écran n'est fournie.
-  return (
-    <div
-      role="img"
-      aria-label={`Visuel du projet ${project.name}`}
-      className="relative flex aspect-[16/10] w-full items-end overflow-hidden bg-blush p-6"
-    >
-      <span aria-hidden="true" className="font-display text-8xl leading-none font-medium italic text-violet-deep/35 transition-transform duration-500 ease-out group-hover:-translate-y-2 group-hover:-rotate-6">
-        {project.name.charAt(0)}
-      </span>
-      <span aria-hidden="true" className="ml-3 mb-2 font-display text-lg text-ink/70">
-        {project.name}
-      </span>
-    </div>
-  )
-}
-
 function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="card group flex h-full flex-col overflow-hidden">
-      <ProjectVisual project={project} />
-
       <div className="flex flex-1 flex-col p-6 sm:p-7">
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-blush px-3 py-1 text-xs font-medium text-violet-deep">{project.status}</span>

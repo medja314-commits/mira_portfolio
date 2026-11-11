@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { About } from './components/About'
@@ -8,6 +9,15 @@ import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 
 function App() {
+  // Les sections sont créées par React après le chargement : le navigateur ne peut donc pas sauter
+  // tout seul à l'ancre d'un lien partagé (ex. …/#projets). On le fait une fois la page affichée.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (!id) return
+    const raf = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'instant', block: 'start' }))
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
   return (
     <>
       <a
@@ -17,7 +27,7 @@ function App() {
         Aller au contenu
       </a>
       <Navbar />
-      <main id="contenu">
+      <main id="contenu" className="overflow-x-clip">
         <Hero />
         <About />
         <Skills />

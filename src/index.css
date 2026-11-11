@@ -4,22 +4,23 @@
    Rose et violet répartis : le violet porte le texte d'accent et les boutons,
    le rose sert aux décors, filets et puces. Les sections alternent blanc rosé et rose pastel. */
 @theme {
-  --color-cream: #fff7fb;      /* blanc rosé : fond principal */
-  --color-blush: #ffe0ef;      /* rose vif clair : sections alternées, survols */
-  --color-powder: #ffbfdc;     /* rose bonbon : sélection, décors */
-  --color-rose: #ff4f9a;       /* rose fuchsia : puces, filets, décors (pas de texte) */
-  --color-lavender: #e2d3ff;   /* lavande vive : bordures, pastilles */
-  --color-violet: #a978ff;     /* violet électrique doux : décors, anneaux */
-  --color-violet-deep: #7a2ff0; /* violet vif : texte d'accent, boutons */
-  --color-violet-hover: #6418d6;
-  --color-ink: #2a1538;        /* texte foncé */
-  --color-muted: #66507a;      /* texte secondaire */
+  /* Palette minimaliste : neutres chauds, rose poudré et prune désaturés, un seul accent. */
+  --color-cream: #fafaf9;      /* blanc cassé : fond principal */
+  --color-blush: #f5f0f1;      /* rosé très léger : sections alternées, survols */
+  --color-powder: #ecdfe4;     /* rose poudré : sélection, décors */
+  --color-rose: #d4a5b6;       /* vieux rose : puces, filets, décors (pas de texte) */
+  --color-lavender: #e7e3eb;   /* gris lavande : bordures, pastilles */
+  --color-violet: #b8adc8;     /* lilas grisé : décors, anneaux */
+  --color-violet-deep: #5e4b78; /* prune : texte d'accent, boutons (contraste 7,6:1 sur blanc) */
+  --color-violet-hover: #4b3b61;
+  --color-ink: #1c1a1f;        /* texte foncé */
+  --color-muted: #6b6670;      /* texte secondaire (5,6:1 sur blanc) */
 
   --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --shadow-card: 0 1px 2px rgba(122, 47, 240, 0.06);
-  --shadow-card-hover: 0 12px 28px -14px rgba(122, 47, 240, 0.35);
+  --shadow-card: 0 1px 2px rgba(28, 26, 31, 0.04);
+  --shadow-card-hover: 0 14px 30px -18px rgba(28, 26, 31, 0.18);
 }
 
 @layer base {
@@ -59,11 +60,11 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-violet-deep px-6 py-3 text-sm font-medium tracking-wide text-white shadow-[0_8px_20px_-10px_rgba(122,47,240,0.65)] transition duration-300 hover:-translate-y-0.5 hover:bg-violet-hover hover:shadow-[0_12px_24px_-10px_rgba(122,47,240,0.75)] active:translate-y-0 focus-visible:outline-violet-deep;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-violet-deep px-6 py-3 text-sm font-medium tracking-wide text-white shadow-[0_6px_16px_-10px_rgba(28,26,31,0.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-violet-hover hover:shadow-[0_10px_22px_-12px_rgba(28,26,31,0.4)] active:translate-y-0 active:scale-[0.97] focus-visible:outline-violet-deep;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-violet-deep/35 bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-violet-deep transition duration-300 hover:-translate-y-0.5 hover:border-violet-deep hover:bg-blush;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-violet-deep/35 bg-transparent px-6 py-3 text-sm font-medium tracking-wide text-violet-deep transition duration-300 hover:-translate-y-0.5 hover:border-violet-deep hover:bg-blush active:scale-[0.97];
   }
 
   .chip {
@@ -80,6 +81,36 @@
 }
 
 /* ---------- Animations ---------- */
+
+/* Courbes partagées : sortie douce (« ease ») et léger rebond (« spring »). */
+:root {
+  --ease-out-soft: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Apparition au défilement (<Reveal>) : flou + glissement, puis plus aucun filtre une fois visible. */
+[data-reveal] {
+  transition:
+    transform 1s var(--ease-out-soft) var(--reveal-delay, 0ms),
+    opacity 1s var(--ease-out-soft) var(--reveal-delay, 0ms),
+    filter 1s var(--ease-out-soft) var(--reveal-delay, 0ms);
+}
+[data-reveal][data-visible='false'] {
+  opacity: 0;
+  filter: blur(8px);
+}
+[data-reveal='up'][data-visible='false'] {
+  transform: translateY(56px);
+}
+[data-reveal='left'][data-visible='false'] {
+  transform: translateX(-48px);
+}
+[data-reveal='right'][data-visible='false'] {
+  transform: translateX(48px);
+}
+[data-reveal='scale'][data-visible='false'] {
+  transform: scale(0.92);
+}
 
 @keyframes fade-up {
   from {
@@ -102,6 +133,40 @@
     opacity: 1;
     filter: blur(0);
     transform: translateY(0);
+  }
+}
+
+@keyframes rise-from-mask {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes dot-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-1.2em);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dot-hop {
+  0%,
+  70%,
+  100% {
+    transform: none;
+  }
+  80% {
+    transform: translateY(-38%);
   }
 }
 
@@ -143,16 +208,6 @@
   }
 }
 
-@keyframes gradient-pan {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 @keyframes shine {
   from {
     transform: translateX(-120%) skewX(-20deg);
@@ -191,6 +246,28 @@
     animation-delay: var(--d, 0ms);
   }
 
+  /* Titre du hero : le masque coupe le mot, qui monte à travers. Le padding laisse de la place
+     aux jambages et à l'inclinaison de l'italique. */
+  .word-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding: 0.06em 0.08em 0.12em 0;
+    margin: -0.06em -0.08em -0.12em 0;
+  }
+  .word-rise {
+    display: inline-block;
+    animation: rise-from-mask 1.1s var(--ease-out-soft) both;
+    animation-delay: var(--d, 0ms);
+  }
+  .dot-drop {
+    display: inline-block;
+    animation:
+      dot-drop 0.9s var(--ease-spring) both,
+      dot-hop 3.6s var(--ease-spring) 3s infinite;
+    animation-delay: var(--d, 0ms), 3s;
+  }
+
   /* Accroche : chaque mot sort du flou en montant légèrement. */
   .animate-word {
     animation: word-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -210,16 +287,6 @@
 
   .animate-float {
     animation: float 6s ease-in-out infinite;
-  }
-
-  /* Dégradé animé dans le texte (nom dans le hero). */
-  .text-gradient {
-    background-image: linear-gradient(110deg, var(--color-violet-deep), var(--color-rose), var(--color-violet), var(--color-violet-deep));
-    background-size: 250% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: gradient-pan 6s ease-in-out infinite;
   }
 
   /* Puces qui apparaissent une à une quand leur bloc devient visible (--i = rang). */
@@ -248,6 +315,69 @@
   .group:hover > .wiggle-on-hover {
     animation: wiggle 0.6s ease-in-out;
   }
+}
+
+/* À propos : les mots s'encrent en passant la ligne de lecture (InkText). */
+.ink-word {
+  color: var(--color-muted);
+  transition: color 0.7s var(--ease-out-soft);
+}
+.ink-word.is-on {
+  color: var(--color-ink);
+}
+
+/* Parcours : rail qui se remplit (--p de 0 à 1) et points qui s'allument au passage. */
+.timeline-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1.5px;
+  width: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(to bottom, var(--color-violet-deep), var(--color-rose));
+  transform: scaleY(var(--p, 0));
+  transform-origin: top;
+  transition: transform 0.25s linear;
+}
+.timeline-item.is-passed .timeline-dot {
+  background: var(--color-rose);
+  border-color: var(--color-rose);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-rose) 22%, transparent);
+}
+
+/* Signature du pied de page. */
+.signoff {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(6rem, 24vw, 17rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: var(--color-violet-deep);
+  user-select: none;
+}
+.signoff-letter {
+  display: inline-block;
+  transition:
+    transform 1s var(--ease-spring) calc(var(--i) * 70ms),
+    opacity 0.6s var(--ease-out-soft) calc(var(--i) * 70ms),
+    color 0.3s;
+}
+.signoff[data-visible='false'] .signoff-letter {
+  transform: translateY(60%);
+  opacity: 0;
+}
+.signoff .signoff-letter.is-lift {
+  transform: translateY(-14%) rotate(-5deg);
+  color: var(--color-rose);
+  transition-delay: 0s;
+}
+.signoff-dot {
+  color: var(--color-rose);
+}
+.signoff[data-visible='true'] .signoff-dot {
+  animation: dot-hop 3.6s var(--ease-spring) 2s infinite;
 }
 
 /* Reflet lumineux qui traverse le bouton principal au survol. */
@@ -286,9 +416,11 @@
   }
 
   .pop-item,
-  .eyebrow-line {
-    opacity: 1;
-    transform: none;
+  .eyebrow-line,
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 
   .card:hover,
@@ -296,4 +428,12 @@
   .btn-secondary:hover {
     transform: none;
   }
+}
+
+/* Portrait du hero : le haut et les bords de la photo se fondent dans le fond de l'arche (pas de couture). */
+.portrait-fade {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%), linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent 0, #000 12%), linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-composite: intersect;
 }
